@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" color="light">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Créer une Nouvelle Tâche</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [disabled]="!taskForm.valid" color="light">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="taskForm" (ngSubmit)="confirm()">
+    <ion-list lines="full">
+      
+      <ion-item>
+        <ion-input label="Titre de la Tâche" labelPlacement="stacked" placeholder="Ex: Développer la fonctionnalité Login" formControlName="title" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea label="Description" labelPlacement="stacked" placeholder="Détails de la tâche..." formControlName="description"></ion-textarea>
+      </ion-item>
+      
+      <ion-item>
+        <ion-select label="Projet" labelPlacement="stacked" placeholder="Sélectionner le projet" formControlName="projectId" required>
+          <ion-select-option *ngFor="let project of availableProjects" [value]="project.id">
+            {{ project.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Priorité" labelPlacement="stacked" placeholder="Choisir la priorité" formControlName="priority" required>
+          <ion-select-option value="low">Faible</ion-select-option>
+          <ion-select-option value="medium">Moyenne</ion-select-option>
+          <ion-select-option value="high">Haute</ion-select-option>
+          <ion-select-option value="urgent">Urgent</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Date d'échéance" labelPlacement="stacked" type="date" formControlName="dueDate" required></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="isAdmin">
+        <ion-select label="Assigner à l'utilisateur" labelPlacement="stacked" placeholder="Sélectionner un utilisateur" formControlName="assignedUserId">
+          <ion-select-option *ngFor="let user of availableUsers" [value]="user.id">
+            {{ user.name }} ({{ user.role }})
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      </ion-list>
+
+    <div class="ion-padding-top">
+        <ion-button 
+            expand="block" 
+            size="large" 
+            type="submit" 
+            [disabled]="!taskForm.valid"
+            color="success">
+            <ion-icon name="add-circle" slot="start"></ion-icon>
+            Ajouter la Tâche
+        </ion-button>
+    </div>
+    </form>
+</ion-content>

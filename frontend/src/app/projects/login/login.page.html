@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Connexion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="6" size-lg="4">
+        
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Bienvenue</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+              
+              <ion-list>
+                
+                <ion-item>
+                  <ion-icon slot="start" [icon]="mailOutline"></ion-icon>
+                  <ion-input 
+                    label="Email" 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="votre.email@exemple.com"
+                    autocomplete="email"
+                  ></ion-input>
+                </ion-item>
+                <ion-text color="danger" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
+                  <p class="ion-padding-start">L'email est requis.</p>
+                </ion-text>
+                <ion-text color="danger" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']">
+                  <p class="ion-padding-start">Veuillez entrer un email valide.</p>
+                </ion-text>
+
+                <ion-item>
+                  <ion-icon slot="start" [icon]="lockClosed"></ion-icon>
+                  <ion-input 
+                    label="Mot de passe" 
+                    type="password" 
+                    formControlName="password" 
+                    placeholder="********"
+                  ></ion-input>
+                </ion-item>
+                <ion-text color="danger" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
+                  <p class="ion-padding-start">Le mot de passe est requis.</p>
+                </ion-text>
+                <ion-text color="danger" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']">
+                  <p class="ion-padding-start">Le mot de passe doit contenir au moins 6 caractères.</p>
+                </ion-text>
+
+              </ion-list>
+              
+              <ion-button 
+                expand="block" 
+                type="submit" 
+                [disabled]="loginForm.invalid" 
+                class="ion-margin-top"
+              >
+                Se connecter
+              </ion-button>
+
+            </form>
+
+            <div class="ion-text-center ion-margin-top action-links">
+              
+              <ion-button 
+                fill="clear" 
+                size="small"
+                (click)="onForgotPassword()"
+              >
+                Mot de passe oublié ?
+              </ion-button>
+              
+              <ion-text color="medium" class="separator">|</ion-text>
+
+              <ion-button 
+                fill="clear" 
+                size="small"
+                (click)="onSignup()"
+              >
+                Créer un compte
+              </ion-button>
+
+            </div>
+
+          
+          
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

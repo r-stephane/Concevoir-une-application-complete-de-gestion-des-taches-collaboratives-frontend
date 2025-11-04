@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Créer un Compte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="6">
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Inscription</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+              <ion-list>
+                
+                <!-- Champ Nom d'utilisateur -->
+                <ion-item>
+                  <ion-icon slot="start" name="person"></ion-icon>
+                  <ion-input
+                    #nameInput
+                    label="Nom d'utilisateur"
+                    formControlName="nameUser"
+                    placeholder="Votre nom complet">
+                  </ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="signupForm.get('nameUser')?.touched && signupForm.get('nameUser')?.errors?.['required']">
+                  <p class="ion-padding-start">Le nom est requis.</p>
+                </ion-text>
+
+                <!-- Champ Email -->
+                <ion-item>
+                  <ion-icon slot="start" name="mail-outline"></ion-icon>
+                  <ion-input 
+                    label="Email" 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="votre.email@exemple.com">
+                  </ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['email']">
+                  <p class="ion-padding-start">Veuillez entrer un email valide.</p>
+                </ion-text>
+
+                <!-- Champ Mot de passe -->
+                <ion-item>
+                  <ion-icon slot="start" name="lock-closed"></ion-icon>
+                  <ion-input 
+                    label="Mot de passe" 
+                    type="password" 
+                    formControlName="password" 
+                    placeholder="Minimum 8 caractères">
+                  </ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['minlength']">
+                  <p class="ion-padding-start">Le mot de passe doit contenir au moins 8 caractères.</p>
+                </ion-text>
+
+                <!-- Champ Confirmation mot de passe -->
+                <ion-item>
+                  <ion-icon slot="start" name="lock-closed"></ion-icon>
+                  <ion-input 
+                    label="Confirmation" 
+                    type="password"
+                    formControlName="confirmPassword" 
+                    placeholder="Confirmez votre mot de passe">
+                  </ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.hasError('passwordsMismatch')">
+                  <p class="ion-padding-start">Les mots de passe ne correspondent pas.</p>
+                </ion-text>
+
+              </ion-list>
+              
+              <!-- Bouton de soumission -->
+              <ion-button 
+                expand="block" 
+                type="submit" 
+                [disabled]="signupForm.invalid" 
+                class="ion-margin-top">
+                Créer mon compte
+              </ion-button>
+
+              <!-- Lien vers la page de connexion -->
+              <ion-button 
+                fill="clear" 
+                expand="block" 
+                class="ion-margin-top" 
+                routerLink="/login">
+                J'ai déjà un compte
+              </ion-button>
+
+            </form>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

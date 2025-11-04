@@ -1,0 +1,49 @@
+/* Fichier : src/app/projects/create-task-modal/create-task-modal.component.scss */
+
+ion-header {
+    // Utilise une couleur primaire pour la barre de titre de la modale
+    ion-toolbar {
+        --background: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+    }
+    ion-title {
+        font-weight: 600;
+        text-align: center;
+    }
+}
+
+ion-content {
+    // Assure un espacement adéquat à l'intérieur du contenu
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+ion-list {
+    background: var(--ion-background-color);
+    padding: 0;
+}
+
+// Style pour les éléments de formulaire
+ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --border-color: var(--ion-color-step-150, #d7d8da); // Couleur de la ligne de séparation
+    
+    ion-input, ion-textarea, ion-select {
+        --padding-start: 0;
+        --padding-end: 0;
+        font-size: 1rem;
+    }
+    
+    // Ajoute un peu d'espace au label si besoin
+    ion-label {
+        font-weight: 500;
+    }
+}
+
+// Mise en évidence des champs requis (peut être affiné avec des classes d'erreur Angular)
+.ng-invalid.ng-touched {
+    ion-input, ion-select, ion-textarea {
+        border-bottom: 2px solid var(--ion-color-danger, #eb445a);
+    }
+}

@@ -1,0 +1,48 @@
+/* Fichier : src/app/projects/create-project-modal/create-project-modal.component.scss */
+
+ion-header {
+    ion-toolbar {
+        --background: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+    }
+    ion-title {
+        font-weight: 600;
+        text-align: center;
+    }
+}
+
+ion-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+// Styler spécifiquement l'input de type couleur
+ion-item {
+    // Élimine le padding par défaut de l'item pour l'input
+    --padding-start: 0;
+    --inner-padding-end: 0; 
+}
+
+.color-picker-input {
+    // Réinitialiser le style de l'input Ionic par défaut
+    --padding-start: 0;
+    --padding-end: 0;
+    
+    // Styler le champ de couleur HTML natif
+    input[type="color"] {
+        height: 40px;
+        width: 100%;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        
+        // Cacher la bordure épaisse par défaut de certains navigateurs
+        &::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        &::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+    }
+}           

@@ -1,0 +1,189 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">
+      <ion-icon name="speedometer-outline"></ion-icon> Tableau de Bord Tâches
+    </ion-title>
+
+    <ion-buttons slot="end" *ngIf="isAdmin"
+      > 
+      <ion-button (click)="openCreateProjectModal()" color="light">
+        <ion-icon name="folder-open" slot="start"></ion-icon> Projet
+      </ion-button>
+      <ion-button (click)="openCreateTaskModal()" color="light">
+        <ion-icon name="add-circle" slot="start"></ion-icon> Tâche
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="stats-grid ion-padding-horizontal">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="3" *ngFor="let stat of stats">
+          <ion-card class="stat-card" [color]="stat.color">
+            <ion-card-content class="ion-text-center">
+              <ion-icon [name]="stat.icon" class="stat-icon-large"></ion-icon>
+              <div class="stat-content">
+                <h1 class="ion-no-margin">{{ stat.value }}</h1>
+                <p>{{ stat.title }}</p>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-list-header>
+    <ion-label
+      ><h2>
+        <ion-icon name="grid-outline"></ion-icon> Tableau Kanban
+      </h2></ion-label
+    >
+  </ion-list-header>
+
+  <div class="kanban-board-scroll">
+    <ion-grid class="kanban-board-grid">
+      <ion-row class="ion-justify-content-start ion-align-items-start">
+        <ion-col
+          size="12"
+          size-md="6"
+          size-lg="3"
+          *ngFor="let col of kanbanColumns"
+        >
+          <ion-card class="kanban-column-card" [color]="col.color">
+            <ion-card-header class="ion-text-center">
+              <ion-card-title>
+                <ion-icon [name]="col.icon"></ion-icon> {{ col.name }} 
+                <ion-badge [color]="col.badgeColor"
+                  >{{ getTasksByStatus(col.status).length }}</ion-badge
+                >
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div
+                [id]="col.status"
+                cdkDropList
+                [cdkDropListData]="getTasksByStatus(col.status)"
+                [cdkDropListConnectedTo]="statusIds"
+                (cdkDropListDropped)="drop($event)"
+                class="tasks-list"
+              >
+                <ion-card
+                  *ngFor="let task of getTasksByStatus(col.status)"
+                  cdkDrag
+                  class="task-item"
+                  [class.overdue]="task.status === 'overdue'"
+                  [class.completed]="task.status === 'completed'"
+                >
+                  <ion-card-header class="task-header">
+                    <ion-card-title class="task-title"
+                      >{{ task.title }}</ion-card-title
+                    >
+                    <ion-badge
+                      [color]="task.priority === 'urgent' ? 'danger' : (task.priority === 'high' ? 'warning' : 'medium')"
+                    >
+                      {{ task.priority | uppercase }}
+                    </ion-badge>
+                    <ion-buttons slot="end" *ngIf="isAdmin">
+                      <ion-button
+                        (click)="deleteTask(task.id)"
+                        fill="clear"
+                        color="danger"
+                      >
+                        <ion-icon name="trash" slot="icon-only"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-card-header>
+
+                  <ion-card-content class="task-description">
+                    {{ task.description.substring(0, 50) + '...' }}
+                    <div class="task-footer">
+                      <ion-badge color="light" class="task-project">
+                        <ion-icon name="folder-outline"></ion-icon> {{
+                        getProject(task.projectId)?.name }}
+                      </ion-badge>
+                      <span
+                        class="task-due-date"
+                        [class.overdue]="task.status === 'overdue'"
+                      >
+                        <ion-icon name="calendar-outline"></ion-icon> {{
+                        task.dueDate }}
+                      </span>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <hr />
+
+  <div class="projects-section ion-padding-horizontal">
+    <div class="section-header">
+      <h2><ion-icon name="folder-open-outline"></ion-icon> Mes Projets</h2>
+      <ion-searchbar
+        placeholder="Rechercher un projet..."
+        [(ngModel)]="projectSearchTerm"
+      >
+      </ion-searchbar>
+    </div>
+
+    <div class="projects-grid">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size="12"
+            size-md="6"
+            size-lg="4"
+            *ngFor="let project of projects | filterProjects: projectSearchTerm"
+          >
+            <ion-card
+              class="project-card"
+              [style.--project-color]="project.color"
+            >
+              <ion-card-header class="project-header">
+                <div
+                  class="project-color"
+                  [style.background]="project.color"
+                ></div>
+                <ion-card-title class="project-title"
+                  >{{ project.name }}</ion-card-title
+                >
+                <ion-buttons slot="end" *ngIf="isAdmin">
+                  <ion-button
+                    (click)="deleteProject(project.id)"
+                    fill="clear"
+                    color="danger"
+                  >
+                    <ion-icon name="trash" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-card-header>
+              <ion-card-content>
+                <p class="project-description">{{ project.description }}</p>
+                <div class="project-progress">
+                  <div class="progress">
+                    <div
+                      class="progress-bar"
+                      [style.width.%]="project.progress"
+                    ></div>
+                  </div>
+                  <span class="progress-text"
+                    >{{ project.progress }}% Complété</span
+                  >
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

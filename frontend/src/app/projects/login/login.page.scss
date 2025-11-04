@@ -1,0 +1,36 @@
+ion-content {
+  --background: var(--ion-color-light); 
+
+  .ion-justify-content-center {
+    height: 100%;
+    align-items: center; // Centrage vertical
+  }
+
+  ion-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  // Styles pour aligner les liens "Oublié" et "Créer un compte"
+  .action-links {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 100%;
+
+    .separator {
+        padding: 0 5px; 
+        font-size: 0.8rem;
+    }
+    
+    // Assurer que les boutons sont discrets
+    ion-button {
+      text-transform: none; // Texte normal au lieu de majuscules par défaut
+    }
+  }
+
+  ion-text p {
+    font-size: 0.75rem;
+    margin-top: -5px; 
+    margin-bottom: 5px;
+  }
+}
