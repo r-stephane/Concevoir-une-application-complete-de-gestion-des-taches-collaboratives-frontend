@@ -11,11 +11,8 @@ npm install -g @ionic/cli
 ionic start nom de app --type=angular
 ### exécuter le programme
 ionic serve
-<<<<<<< HEAD
 ### Technologies et outils utilisées
 - Ionic+Framework
 - Github
 - Javascript
-=======
 
->>>>>>> 5b0784d (refactor)
