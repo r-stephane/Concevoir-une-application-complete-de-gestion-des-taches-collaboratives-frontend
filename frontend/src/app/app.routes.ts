@@ -1,6 +1,13 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  // ✅ Route par défaut : redirige vers dashboard
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
+
   {
     path: 'projects',
     redirectTo: 'projects/login',
@@ -10,18 +17,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./projects/login/login.page').then((m) => m.LoginPage),
   },
-  { 
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./projects/dashboard/dashboard.page').then((m) => m.DashboardPage),
   },
   {
-    path: 'login',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
-  },
-  {
     path: 'register',
-    loadComponent: () => import('./projects/register/register.page').then( m => m.SignupPage)
+    loadComponent: () =>
+      import('./projects/register/register.page').then((m) => m.SignupPage),
   },
- 
 ];
