@@ -24,7 +24,7 @@ import { person, lockClosed, mailOutline } from 'ionicons/icons';
   ],
 })
 export class LoginPage implements OnInit {
-  // --- INJECTIONS ---
+  // INJECTIONS 
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private alertCtrl = inject(AlertController);
@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
 
   loginForm!: FormGroup;
 
-  // --- PROPRIÉTÉS POUR LES ICÔNES (Correction de l'erreur TS2339) ---
+  //  PROPRIÉTÉS POUR LES ICÔNES 
   public readonly mailOutline = mailOutline;
   public readonly lockClosed = lockClosed;
 
@@ -47,9 +47,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  // ==============
-  // 1. Connexion (Login)
-  // ==============
+  // Connexion (Login)
   async onLogin() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -62,7 +60,7 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     try {
-      // --- SIMULATION DE L'AUTHENTIFICATION ---
+      // SIMULATION DE L'AUTHENTIFICATION
       console.log('Tentative de connexion avec:', this.loginForm.value);
 
       await loading.dismiss();
@@ -79,17 +77,13 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // ==============
-  // 2. Déconnexion (Logout)
-  // ==============
+  //  Déconnexion (Logout)
   onLogout() {
     // Rediriger vers la page de login ou montrer une alerte
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
-  // ==============
-  // 3. Mot de passe oublié (Forgot Password)
-  // ==============
+  // Mot de passe oublié (Forgot Password)
   async onForgotPassword() {
     const alert = await this.alertCtrl.create({
       header: 'Mot de passe oublié',
@@ -102,7 +96,7 @@ export class LoginPage implements OnInit {
             // Logique de validation et de gestion d'erreur (Correction de l'erreur TS7030)
             if (!data.email || !Validators.email(this.fb.control(data.email))) {
               this.showEmailError();
-              return false; // Empêche l'alerte de se fermer
+              return false; 
             }
             
             // SIMULATION DE L'ENVOI D'EMAIL
@@ -115,7 +109,7 @@ export class LoginPage implements OnInit {
             });
             await confirmation.present();
             
-            return true; // Ferme l'alerte en cas de succès (Correction TS7030)
+            return true;
           },
         },
       ],
@@ -124,9 +118,7 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
   
-  // ==============
-  // 4. Créer un compte (Signup)
-  // ==============
+  // Créer un compte (Signup)
   onSignup() {
     // Redirige vers la route /signup
     this.router.navigateByUrl('/register');

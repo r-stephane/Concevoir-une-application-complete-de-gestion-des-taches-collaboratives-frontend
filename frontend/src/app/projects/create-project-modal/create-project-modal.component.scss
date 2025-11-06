@@ -1,4 +1,3 @@
-/* Fichier : src/app/projects/create-project-modal/create-project-modal.component.scss */
 
 ion-header {
     ion-toolbar {
@@ -18,7 +17,6 @@ ion-content {
 
 // Styler spécifiquement l'input de type couleur
 ion-item {
-    // Élimine le padding par défaut de l'item pour l'input
     --padding-start: 0;
     --inner-padding-end: 0; 
 }

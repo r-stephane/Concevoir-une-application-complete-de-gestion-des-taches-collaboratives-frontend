@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // ✅ Route par défaut : redirige vers dashboard
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
 

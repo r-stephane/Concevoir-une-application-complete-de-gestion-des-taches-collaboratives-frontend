@@ -1,4 +1,3 @@
-/* Fichier : src/app/projects/create-task-modal/create-task-modal.component.scss */
 
 ion-header {
     // Utilise une couleur primaire pour la barre de titre de la modale
@@ -27,7 +26,7 @@ ion-list {
 ion-item {
     --padding-start: 0;
     --inner-padding-end: 0;
-    --border-color: var(--ion-color-step-150, #d7d8da); // Couleur de la ligne de séparation
+    --border-color: var(--ion-color-step-150, #d7d8da); 
     
     ion-input, ion-textarea, ion-select {
         --padding-start: 0;

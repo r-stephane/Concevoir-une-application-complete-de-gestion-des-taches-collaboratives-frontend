@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core'; // 👈 CORRECTION: Injectable importé
+import { Component, OnInit, Injectable } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController, AlertController } from '@ionic/angular';
@@ -48,10 +48,7 @@ interface StatCard {
     color: string;
 }
 
-// =========================================================================
-// CLASSE SERVICE SIMULÉE DANS LE MÊME FICHIER
-// =========================================================================
-@Injectable({ // 👈 CORRECTION APPLIQUÉE ICI
+@Injectable({ 
     providedIn: 'root'
 })
 export class TaskProjectService {
@@ -115,7 +112,6 @@ export class TaskProjectService {
         return of({ success: true }); 
     }
 }
-// =========================================================================
 
 @Component({
   selector: 'app-dashboard',
@@ -128,8 +124,6 @@ export class TaskProjectService {
     IonicModule,
     DragDropModule,
     FilterProjectsPipe,
-    // CreateProjectModalComponent, 
-    // CreateTaskModalComponent,
     HttpClientModule 
   ]
 })
@@ -236,10 +230,7 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  // =========================================================================
-  // MÉTHODES DE SUPPRESSION AVEC LE SERVICE
-  // =========================================================================
-
+// delete of task
   async deleteTask(id: number) {
     if (!this.isAdmin) {
       this.presentAccessDeniedAlert("tâche");
@@ -285,7 +276,7 @@ export class DashboardPage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'Confirmer la suppression du Projet',
       message: `Êtes-vous sûr de vouloir supprimer le projet : <strong>${project?.name || id}</strong> ?<br><br>
-                ⚠️ **Attention :** Cela supprimera également **${linkedTasksCount}** tâche(s) liée(s) à ce projet.`,
+                 **Attention :** Cela supprimera également **${linkedTasksCount}** tâche(s) liée(s) à ce projet.`,
       buttons: [
         { text: 'Annuler', role: 'cancel' },
         {
@@ -318,10 +309,7 @@ export class DashboardPage implements OnInit {
     await alert.present();
   }
 
-  // =========================================================================
-  // LOGIQUE DES MODALES AVEC LE SERVICE
-  // =========================================================================
-
+// modal of service
   async openCreateProjectModal() {
     if (!this.isAdmin) {
       this.presentAccessDeniedAlert("projet");
